@@ -22,7 +22,6 @@ class MainActivity : AppCompatActivity() {
         makeAnnouncementButton.setOnClickListener {
             val intent = Intent(this, AnnouncementActivity::class.java)
             this.startActivity(intent)
-            finish()
         }
     }
 }
