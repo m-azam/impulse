@@ -8,13 +8,14 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 
 class LoginActivity : AppCompatActivity() {
+    val publishMessage = PublishSubscribeMessage()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
 
         findViewById<Button>(R.id.login_button).setOnClickListener {
             val PFWID = findViewById<EditText>(R.id.editTextNumber);
-
+            publishMessage.subscribe()
             fun validatePFWID():Boolean {
 
                 val pfwidInput:String = PFWID.text.toString().trim();

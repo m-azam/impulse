@@ -10,16 +10,17 @@ import com.google.android.gms.nearby.messages.MessageListener;
 
 class PublishSubscribeMessage: AppCompatActivity(){
     val TAG = "PublishActivity"
+    val messageListener = object : MessageListener() {
+        override fun onFound(message: Message) {
+            Log.d(TAG, "onFound: ${message.content}")
+        }
+        override fun onLost(message: Message) {
+            Log.d(TAG, "onFound: ${message.content}")
+        }
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val messageListener = object : MessageListener() {
-            override fun onFound(message: Message) {
-                Log.d(TAG, "onFound: ${message.content}")
-            }
-            override fun onLost(message: Message) {
-                Log.d(TAG, "onFound: ${message.content}")
-            }
-        }
+
     }
     fun publish(message: String){
         Log.i(TAG, "Publishing message: $message")
@@ -27,6 +28,8 @@ class PublishSubscribeMessage: AppCompatActivity(){
         Nearby.getMessagesClient(this).publish(mActiveMessage);
     }
 
-
+    fun subscribe() {
+        Nearby.getMessagesClient(this).subscribe(messageListener)
+    }
 
 }
