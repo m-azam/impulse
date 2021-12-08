@@ -8,11 +8,11 @@ import com.purdue.impulse.entities.EventItem
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog
 import com.wdullaer.materialdatetimepicker.time.TimePickerDialog
 import java.util.*
-import kotlin.math.min
 
 class AnnouncementActivity : AppCompatActivity(), TimePickerDialog.OnTimeSetListener, com.wdullaer.materialdatetimepicker.date.DatePickerDialog.OnDateSetListener {
 
     var dateTimeData: String = ""
+    val publishMessage = PublishSubscribeMessage()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -21,6 +21,7 @@ class AnnouncementActivity : AppCompatActivity(), TimePickerDialog.OnTimeSetList
     }
 
     private fun setClickListeners() {
+
         val dateTimeView = findViewById<EditText>(R.id.event_time)
         dateTimeView.setOnClickListener {
             val now: Calendar = Calendar.getInstance()
@@ -39,6 +40,7 @@ class AnnouncementActivity : AppCompatActivity(), TimePickerDialog.OnTimeSetList
             val eventItem: EventItem = EventItem(eventTitleView.text.toString()
                 , eventDetailsView.text.toString(), eventBountyView.text.toString().toDouble(), dateTimeData)
             finish()
+            publishMessage.publish(eventDetailsView.text.toString())
         }
         findViewById<Button>(R.id.cancel_button).setOnClickListener {
             finish()
