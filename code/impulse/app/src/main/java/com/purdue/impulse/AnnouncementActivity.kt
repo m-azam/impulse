@@ -8,16 +8,18 @@ import com.purdue.impulse.entities.EventItem
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog
 import com.wdullaer.materialdatetimepicker.time.TimePickerDialog
 import java.util.*
+import com.google.android.gms.nearby.Nearby
+import com.google.android.gms.nearby.messages.Message;
 
 class AnnouncementActivity : AppCompatActivity(), TimePickerDialog.OnTimeSetListener, com.wdullaer.materialdatetimepicker.date.DatePickerDialog.OnDateSetListener {
 
     var dateTimeData: String = ""
-    val publishMessage = PublishSubscribeMessage()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_announcement)
         setClickListeners();
+
     }
 
     private fun setClickListeners() {
@@ -40,11 +42,12 @@ class AnnouncementActivity : AppCompatActivity(), TimePickerDialog.OnTimeSetList
             val eventItem: EventItem = EventItem(eventTitleView.text.toString()
                 , eventDetailsView.text.toString(), eventBountyView.text.toString().toDouble(), dateTimeData)
             finish()
-            publishMessage.publish(eventDetailsView.text.toString())
         }
         findViewById<Button>(R.id.cancel_button).setOnClickListener {
             finish()
         }
+        val mActiveMessage = Message(eventDetailsView.text.toString().toByteArray());
+        Nearby.getMessagesClient(this).publish(mActiveMessage);
     }
 
     override fun onTimeSet(view: TimePickerDialog?, hourOfDay: Int, minute: Int, second: Int) {
