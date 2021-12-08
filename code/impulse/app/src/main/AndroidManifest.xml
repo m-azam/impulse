@@ -9,6 +9,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.DayNight.DarkActionBar">
+        <meta-data
+            android:name="com.google.android.nearby.messages.API_KEY"
+            android:value="AIzaSyAwWE35eqeEQoIP3oBC_yBsMd2YYa5AOvU" />
+
         <activity
             android:name=".LoginActivity"
             android:exported="true">
