@@ -5,6 +5,7 @@
       <map>
         <entry key="../../../../../../../../../layout/custom_preview.xml" value="0.1828125" />
         <entry key="app/src/main/res/drawable/ic_baseline_beenhere_24.xml" value="0.35885416666666664" />
+        <entry key="app/src/main/res/layout/activity_announcement.xml" value="0.32563405797101447" />
         <entry key="app/src/main/res/layout/activity_create.xml" value="0.3401268115942029" />
         <entry key="app/src/main/res/layout/activity_dash.xml" value="0.3401268115942029" />
         <entry key="app/src/main/res/layout/activity_login.xml" value="0.3351449275362319" />
