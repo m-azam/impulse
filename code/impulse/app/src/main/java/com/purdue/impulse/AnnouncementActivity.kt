@@ -55,7 +55,7 @@ class AnnouncementActivity : AppCompatActivity(), TimePickerDialog.OnTimeSetList
         findViewById<Button>(R.id.make_announcement_button).setOnClickListener {
             val eventItem: EventItem = EventItem(eventTitleView.text.toString()
                 , eventDetailsView.text.toString(), eventBountyView.text.toString().toDouble(), dateTimeData)
-            publish(eventDetailsView)
+            publish(eventTitleView)
         }
         findViewById<Button>(R.id.cancel_button).setOnClickListener {
             finish()
