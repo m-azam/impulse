@@ -35,7 +35,7 @@ class MainActivity : AppCompatActivity() {
         mMessageListener = object : MessageListener() {
             override fun onFound(message: Message) {
                 Log.i("INCOMING MESSAGE", "onFound: "+String(message.content))
-
+                Toast.makeText(this@MainActivity, "Publishing", Toast.LENGTH_SHORT).show()
                 events.add(EventItem("Title",String(message.content) , 40.0,"1"))
                 recyclerView.adapter?.notifyDataSetChanged()
             }
