@@ -30,12 +30,14 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_dash)
         var events: ArrayList<EventItem> = ArrayList()
+        val recyclerView: RecyclerView = findViewById<RecyclerView>(R.id.event_recycler)
 
         mMessageListener = object : MessageListener() {
             override fun onFound(message: Message) {
                 Log.i("INCOMING MESSAGE", "onFound: "+String(message.content))
-                events.add(EventItem("Title",String(message.content) , 40.0,"1"))
 
+                events.add(EventItem("Title",String(message.content) , 40.0,"1"))
+                recyclerView.adapter?.notifyDataSetChanged()
             }
             override fun onLost(message: Message) {
                 Log.i("ERROR", "onFound: ${message.content}")
@@ -47,7 +49,6 @@ class MainActivity : AppCompatActivity() {
         }
         subscribe()
         events.add(EventItem("Pizza at the clubhouse", "2nd December 8PM", 40.0,"1"))
-        val recyclerView: RecyclerView = findViewById<RecyclerView>(R.id.event_recycler)
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.adapter = EventAdapter(this, events)
         val makeAnnouncementButton = findViewById<Button>(R.id.make_announcement_dash)

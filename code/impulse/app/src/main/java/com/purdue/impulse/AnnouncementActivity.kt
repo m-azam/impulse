@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Button
 import android.widget.EditText
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.purdue.impulse.entities.EventItem
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog
@@ -28,7 +29,7 @@ class AnnouncementActivity : AppCompatActivity(), TimePickerDialog.OnTimeSetList
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_announcement)
-        setClickListeners();
+        setClickListeners()
 
     }
 
@@ -63,13 +64,14 @@ class AnnouncementActivity : AppCompatActivity(), TimePickerDialog.OnTimeSetList
 
     private fun publish(details: EditText) {
         Log.i("PUBLISHING MESSAGE", "Publishing")
-
+        Toast.makeText(this, "Publishing", Toast.LENGTH_SHORT).show()
         val options = PublishOptions.Builder()
             .setStrategy(PUB_SUB_STRATEGY)
             .setCallback(object : PublishCallback() {
                 override fun onExpired() {
                     super.onExpired()
                     Log.i("PUBLISHING MESSAGE", "No longer publishing")
+                    Toast.makeText(this@AnnouncementActivity, "NotPublishing", Toast.LENGTH_SHORT).show()
 
                 }
             }).build()
