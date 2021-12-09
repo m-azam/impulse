@@ -26,7 +26,6 @@ class AnnouncementActivity : AppCompatActivity(), TimePickerDialog.OnTimeSetList
     private val PUB_SUB_STRATEGY = Strategy.Builder()
         .setTtlSeconds(TTL_IN_SECONDS).build()
     private var mMessage: Message? = null
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_announcement)
@@ -54,7 +53,7 @@ class AnnouncementActivity : AppCompatActivity(), TimePickerDialog.OnTimeSetList
         findViewById<Button>(R.id.make_announcement_button).setOnClickListener {
             val eventItem: EventItem = EventItem(eventTitleView.text.toString()
                 , eventDetailsView.text.toString(), eventBountyView.text.toString().toDouble(), dateTimeData)
-            publish(eventTitleView)
+            publish(eventTitleView.text.toString())
         }
         findViewById<Button>(R.id.cancel_button).setOnClickListener {
             finish()
@@ -62,7 +61,7 @@ class AnnouncementActivity : AppCompatActivity(), TimePickerDialog.OnTimeSetList
 
     }
 
-    private fun publish(details: EditText) {
+     fun publish(details: String) {
         Log.i("PUBLISHING MESSAGE", "Publishing")
         Toast.makeText(this, "Publishing", Toast.LENGTH_SHORT).show()
         val options = PublishOptions.Builder()
@@ -75,7 +74,7 @@ class AnnouncementActivity : AppCompatActivity(), TimePickerDialog.OnTimeSetList
 
                 }
             }).build()
-        mMessage = Message(details.text.toString().toByteArray())
+        mMessage = Message(details.toString().toByteArray())
 
         Nearby.getMessagesClient(this).publish(mMessage!!, options)
 

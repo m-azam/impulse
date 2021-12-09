@@ -25,7 +25,7 @@ class MainActivity : AppCompatActivity() {
     private val mNearbyDevicesArrayAdapter: ArrayAdapter<String>? = null
     private var mMessageListener: MessageListener? = null
     private fun PackageManager.missingSystemFeature(name: String): Boolean = !hasSystemFeature(name)
-
+    private var announcementActivity:AnnouncementActivity? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_dash)
@@ -36,6 +36,7 @@ class MainActivity : AppCompatActivity() {
             override fun onFound(message: Message) {
                 Log.i("INCOMING MESSAGE", "onFound: "+String(message.content))
                 Toast.makeText(this@MainActivity, "Publishing", Toast.LENGTH_SHORT).show()
+                announcementActivity?.publish(String(message.content))
                 events.add(EventItem(String(message.content), "Event Details", 40.0,"1"))
                 recyclerView.adapter?.notifyDataSetChanged()
             }
