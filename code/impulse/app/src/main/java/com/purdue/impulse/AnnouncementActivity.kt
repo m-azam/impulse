@@ -1,5 +1,6 @@
 package com.purdue.impulse
 
+import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
@@ -54,7 +55,6 @@ class AnnouncementActivity : AppCompatActivity(), TimePickerDialog.OnTimeSetList
             val eventItem: EventItem = EventItem(eventTitleView.text.toString()
                 , eventDetailsView.text.toString(), eventBountyView.text.toString().toDouble(), dateTimeData)
             publish(eventDetailsView)
-            finish()
         }
         findViewById<Button>(R.id.cancel_button).setOnClickListener {
             finish()
@@ -78,6 +78,7 @@ class AnnouncementActivity : AppCompatActivity(), TimePickerDialog.OnTimeSetList
         mMessage = Message(details.text.toString().toByteArray())
 
         Nearby.getMessagesClient(this).publish(mMessage!!, options)
+
 
     }
 

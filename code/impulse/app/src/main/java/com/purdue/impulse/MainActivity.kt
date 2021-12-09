@@ -36,7 +36,7 @@ class MainActivity : AppCompatActivity() {
             override fun onFound(message: Message) {
                 Log.i("INCOMING MESSAGE", "onFound: "+String(message.content))
                 Toast.makeText(this@MainActivity, "Publishing", Toast.LENGTH_SHORT).show()
-                events.add(EventItem("Title",String(message.content) , 40.0,"1"))
+                events.add(EventItem(String(message.content), "Event Details", 40.0,"1"))
                 recyclerView.adapter?.notifyDataSetChanged()
             }
             override fun onLost(message: Message) {
@@ -60,6 +60,8 @@ class MainActivity : AppCompatActivity() {
 
 
     }
+
+
     private fun subscribe() {
         Log.i(TAG, "Subscribing")
         mNearbyDevicesArrayAdapter?.clear()
