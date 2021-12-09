@@ -1,7 +1,5 @@
 package com.purdue.impulse
 
-import android.content.Intent
-import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
@@ -18,6 +16,9 @@ import com.google.android.gms.nearby.messages.PublishCallback
 import com.google.android.gms.nearby.messages.PublishOptions
 import com.google.android.gms.nearby.messages.Strategy
 import java.nio.charset.Charset
+import android.content.DialogInterface
+import androidx.appcompat.app.AlertDialog
+
 
 class AnnouncementActivity : AppCompatActivity(), TimePickerDialog.OnTimeSetListener, com.wdullaer.materialdatetimepicker.date.DatePickerDialog.OnDateSetListener {
 
@@ -78,8 +79,12 @@ class AnnouncementActivity : AppCompatActivity(), TimePickerDialog.OnTimeSetList
         mMessage = Message(details.text.toString().toByteArray())
 
         Nearby.getMessagesClient(this).publish(mMessage!!, options)
-
-
+        val alertDialog: android.app.AlertDialog? = android.app.AlertDialog.Builder(this).create()
+        alertDialog?.setTitle("Alert")
+        alertDialog?.setMessage("Message is being published")
+        alertDialog?.setButton(AlertDialog.BUTTON_NEUTRAL, "Close",
+            DialogInterface.OnClickListener { dialog, which -> dialog.dismiss() })
+        alertDialog?.show()
     }
 
     override fun onTimeSet(view: TimePickerDialog?, hourOfDay: Int, minute: Int, second: Int) {
