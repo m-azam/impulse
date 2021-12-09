@@ -1,5 +1,6 @@
 package com.purdue.impulse
 
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
@@ -15,9 +16,12 @@ import com.google.android.gms.nearby.messages.Message;
 import com.google.android.gms.nearby.messages.PublishCallback
 import com.google.android.gms.nearby.messages.PublishOptions
 import com.google.android.gms.nearby.messages.Strategy
-import java.nio.charset.Charset
 import android.content.DialogInterface
 import androidx.appcompat.app.AlertDialog
+import com.google.gson.Gson
+import com.purdue.impulse.entities.Block
+import java.nio.charset.StandardCharsets
+import java.security.MessageDigest
 
 
 class AnnouncementActivity : AppCompatActivity(), TimePickerDialog.OnTimeSetListener, com.wdullaer.materialdatetimepicker.date.DatePickerDialog.OnDateSetListener {
@@ -55,6 +59,17 @@ class AnnouncementActivity : AppCompatActivity(), TimePickerDialog.OnTimeSetList
         findViewById<Button>(R.id.make_announcement_button).setOnClickListener {
             val eventItem: EventItem = EventItem(eventTitleView.text.toString()
                 , eventDetailsView.text.toString(), eventBountyView.text.toString().toDouble(), dateTimeData)
+            val sharedPref = this.getSharedPreferences(
+                "blockchain", Context.MODE_PRIVATE)
+            var gson: Gson = Gson()
+            var newBlock: Block? = null
+            if (sharedPref.getString("block", null) != null) {
+                var oldBlockString = sharedPref.getString("block", null)!!
+                val hash: String = org.apache.commons.codec.digest.DigestUtils.sha256Hex(oldBlockString);
+                var oldBlock = gson.fromJson(oldBlockString, Block::class.java)
+                newBlock = Block(eventItem, hash, oldBlock)
+            }
+            sharedPref.edit().putString("block", gson.toJson(newBlock))
             publish(eventTitleView)
         }
         findViewById<Button>(R.id.cancel_button).setOnClickListener {

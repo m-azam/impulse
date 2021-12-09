@@ -42,4 +42,6 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
     implementation 'com.wdullaer:materialdatetimepicker:4.2.3'
     implementation 'com.google.android.gms:play-services-nearby:18.0.0'
+    implementation 'com.google.code.gson:gson:2.8.9'
+    implementation 'commons-codec:commons-codec:1.15'
 }
