@@ -2,10 +2,14 @@ package com.purdue.impulse
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.google.android.gms.nearby.Nearby
+import com.google.android.gms.nearby.messages.Message
+import com.google.android.gms.nearby.messages.MessageListener
 
 class LoginActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -14,7 +18,6 @@ class LoginActivity : AppCompatActivity() {
 
         findViewById<Button>(R.id.login_button).setOnClickListener {
             val PFWID = findViewById<EditText>(R.id.editTextNumber);
-
             fun validatePFWID():Boolean {
 
                 val pfwidInput:String = PFWID.text.toString().trim();
@@ -44,6 +47,7 @@ class LoginActivity : AppCompatActivity() {
 
                     var intent: Intent = Intent(this, MainActivity::class.java)
                     this.startActivity(intent)
+
                     finish()
             }
         }
