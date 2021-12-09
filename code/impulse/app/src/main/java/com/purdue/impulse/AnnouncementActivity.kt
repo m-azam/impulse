@@ -52,7 +52,7 @@ class AnnouncementActivity : AppCompatActivity(), TimePickerDialog.OnTimeSetList
         findViewById<Button>(R.id.make_announcement_button).setOnClickListener {
             val eventItem: EventItem = EventItem(eventTitleView.text.toString()
                 , eventDetailsView.text.toString(), eventBountyView.text.toString().toDouble(), dateTimeData)
-            publish()
+            publish(eventDetailsView)
             finish()
         }
         findViewById<Button>(R.id.cancel_button).setOnClickListener {
@@ -61,7 +61,7 @@ class AnnouncementActivity : AppCompatActivity(), TimePickerDialog.OnTimeSetList
 
     }
 
-    private fun publish() {
+    private fun publish(details: EditText) {
         Log.i("PUBLISHING MESSAGE", "Publishing")
 
         val options = PublishOptions.Builder()
@@ -70,11 +70,13 @@ class AnnouncementActivity : AppCompatActivity(), TimePickerDialog.OnTimeSetList
                 override fun onExpired() {
                     super.onExpired()
                     Log.i("PUBLISHING MESSAGE", "No longer publishing")
+
                 }
             }).build()
-        mMessage = Message(Build.MODEL.toByteArray(Charset.forName("UTF-8")))
+        mMessage = Message(details.text.toString().toByteArray())
 
-        Nearby.getMessagesClient(this).publish(mMessage!!, options);
+        Nearby.getMessagesClient(this).publish(mMessage!!, options)
+
     }
 
     override fun onTimeSet(view: TimePickerDialog?, hourOfDay: Int, minute: Int, second: Int) {

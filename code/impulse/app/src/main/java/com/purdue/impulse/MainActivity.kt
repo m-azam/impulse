@@ -1,11 +1,13 @@
 package com.purdue.impulse
 
 import android.content.Intent
+import android.content.pm.PackageManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.ArrayAdapter
 import android.widget.Button
+import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.gms.nearby.Nearby
@@ -22,6 +24,7 @@ class MainActivity : AppCompatActivity() {
 
     private val mNearbyDevicesArrayAdapter: ArrayAdapter<String>? = null
     private var mMessageListener: MessageListener? = null
+    private fun PackageManager.missingSystemFeature(name: String): Boolean = !hasSystemFeature(name)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,11 +33,17 @@ class MainActivity : AppCompatActivity() {
 
         mMessageListener = object : MessageListener() {
             override fun onFound(message: Message) {
-                Log.d("INCOMING MESSAGE", "onFound: ${message.content}")
+                Log.i("INCOMING MESSAGE", "onFound: "+String(message.content))
+                events.add(EventItem("Title",String(message.content) , 40.0,"1"))
+
             }
             override fun onLost(message: Message) {
-                Log.d("ERROR", "onFound: ${message.content}")
+                Log.i("ERROR", "onFound: ${message.content}")
             }
+        }
+        packageManager.takeIf { it.missingSystemFeature(PackageManager.FEATURE_BLUETOOTH_LE) }?.also {
+            Toast.makeText(this, "BLE NOT SUPPORTED", Toast.LENGTH_SHORT).show()
+            finish()
         }
         subscribe()
         events.add(EventItem("Pizza at the clubhouse", "2nd December 8PM", 40.0,"1"))
